@@ -47,12 +47,29 @@ function add_gpio(containerId) {
     div.innerHTML = `
         <select class="gpio">
             <option>GPIO0</option>
+            <option>GPIO1</option>
             <option>GPIO2</option>
+            <option>GPIO3</option>
             <option>GPIO4</option>
             <option>GPIO5</option>
+            <option>GPIO6</option>
+            <option>GPIO7</option>
+            <option>GPIO8</option>
+            <option>GPIO9</option>
+            <option>GPI10</option>
+            <option>GPI11</option>
+            <option>GPI12</option>
+            <option>GPI13</option>
+            <option>GPI14</option>
+            <option>GPI15</option>
+            <option>GPI16</option>
+            <option>GPI17</option>
             <option>GPIO18</option>
             <option>GPIO19</option>
+            <option>GPIO20</option>
             <option>GPIO21</option>
+            <option>GPIO22</option>
+            <option>GPIO23</option>
         </select>
         <button type="button" onclick="this.parentElement.remove()">❌</button>
     `;
@@ -75,15 +92,31 @@ function addSensor() {
         <input class="sensorname" value="temperature_${sensorCount}">
 
         <label>GPIO</label>
-        <select class="gpio_sensor">
+         <select class="gpio">
             <option>GPIO0</option>
+            <option>GPIO1</option>
             <option>GPIO2</option>
+            <option>GPIO3</option>
             <option>GPIO4</option>
             <option>GPIO5</option>
-            <option selected>GPIO6</option>
+            <option>GPIO6</option>
+            <option>GPIO7</option>
+            <option>GPIO8</option>
+            <option>GPIO9</option>
+            <option>GPI10</option>
+            <option>GPI11</option>
+            <option>GPI12</option>
+            <option>GPI13</option>
+            <option>GPI14</option>
+            <option>GPI15</option>
+            <option>GPI16</option>
+            <option>GPI17</option>
             <option>GPIO18</option>
             <option>GPIO19</option>
+            <option>GPIO20</option>
             <option>GPIO21</option>
+            <option>GPIO22</option>
+            <option>GPIO23</option>
         </select>
 
         <label>Adresse</label>

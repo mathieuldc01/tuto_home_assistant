@@ -1,0 +1,135 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+
+
+<HTML>
+<HEAD>
+<link rel="stylesheet" href="../config.css">
+<TITLE></TITLE>
+</HEAD>
+<BODY>
+    <div class="bandeau">
+        <div class="imagebandeau" href=""><img src="../images/Logo_Centrale_Lyon_Rouge.png" alt=""></div>
+        <a class="bouton" href="../site_tuto.html" >Accueil</a> 
+        <a class="bouton" href="requirements.html">Requirement</a>
+        <a class="bouton" href="deploiement.html">Home Assistance</a>
+        <a class="bouton" href="raspberry.html">Rasberry Pi</a>
+        <a class="bouton" href="capteurs.html">Capteur</a>
+        <a class="bouton" href="plans.html">Plan</a>
+    </div>
+<ol class="toc-list" role="list"></ol>
+<hr>
+
+<div class="content">
+<h1>Préparation de la Raspberry Pi</h1>
+<ul class="menu"></ul>
+<li ><h2>Installation de Debian sur le Raspberry Pi</h2>
+                <div id="Debian" class="section">
+<p>
+Télécharger le logiciel officiel : <a class="black" href="https://www.raspberrypi.com/software/" target="_blank">
+Raspberry Pi Imager
+</a>
+</p>
+
+<p>
+Une fois le logiciel installé :
+</p>
+
+<ol>
+<li>Sélectionner le modèle de Raspberry Pi</li>
+<li>Choisir le système d'exploitation (Debian x64)</li>
+<li>Sélectionner la carte micro SD</li>
+<li>Configurer les paramètres (utilisateur, mot de passe, réseau)</li>
+<li>Lancer l'installation</li>
+</ol>
+
+<p>
+Une fois l'installation terminée, insérer la carte micro-SD dans le Raspberry Pi puis démarrer l'appareil.
+</p>
+
+
+
+
+                </div>
+</li>
+<li><h2>1er connexion au Raspberry Pi</h2>
+                <div id="Connexion_rbpi" class="section">
+<p>
+Récupérer l'adresse IP du Raspberry Pi :
+</p>
+
+<div class="command">
+hostname -I
+</div>
+
+<p>
+Dans un navigateur web, entrer :
+</p>
+
+<div class="command">
+ADRESSE_IP:8123
+</div>
+
+<p>
+Vous accéderez alors à l'interface de Home Assistant.
+</p>
+
+                </div>
+</li>
+<li><h2>Connecter le Raspberry Pi au Wifi</h2>
+                <div id="connexion_wifi" class="section">
+<p>
+Lister les réseaux disponibles :
+</p>
+
+<div class="command">
+nmcli device wifi list
+</div>
+
+<p>
+Se connecter à un réseau :
+</p>
+
+<div class="command">
+sudo nmcli device wifi connect "NOM_DU_RESEAU" password "MOT_DE_PASSE"
+</div>
+
+                </div>
+</li>
+
+
+<div class="command">
+nmcli device wifi list
+</div>
+
+<p>
+Se connecter à un réseau :
+</p>
+
+<div class="command">
+sudo nmcli device wifi connect "NOM_DU_RESEAU" password "MOT_DE_PASSE"
+</div>
+
+                </div>
+</li>
+
+    <footer class="footer">
+        <div class="imagebandeau" href=""><img src="../images/Logo_Centrale_Lyon_Rouge.png" alt=""></div>
+        <div class="cours"><div class="textefooter">Projet réalisé dans le cadre du cours</div><div class="textefooter">MSO_INFO_3_8 Projet Informatique</div></div>
+        <div class="eleves">
+            <div class="textefooter">Projet réalisé par</div>
+            <div class="textefooter">Patricio José SILVA</div>
+            <div class="textefooter">Mathieu LONDICHE</div>
+            <div class="textefooter">Ulysse DURAND</div>
+            <div class="textefooter">Louis ROBBE GODARD</div>
+        </div>
+        <div class="tuteur">
+            <div class="textefooter">Projet encadré par</div>
+            <div class="textefooter">Olivier DESSOMBZ</div></div>
+    </footer>
+
+    <script src="..\config.js"></script>
+</BODY>
+</HTML>

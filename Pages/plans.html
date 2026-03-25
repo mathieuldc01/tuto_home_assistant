@@ -1,0 +1,193 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+
+
+<HTML>
+<HEAD>
+<link rel="stylesheet" href="../config.css">
+<TITLE></TITLE>
+</HEAD>
+<BODY>
+    <div class="bandeau">
+        <div class="imagebandeau" href=""><img src="../images/Logo_Centrale_Lyon_Rouge.png" alt=""></div>
+        <a class="bouton" href="../site_tuto.html" >Accueil</a> 
+        <a class="bouton" href="requirements.html">Requirement</a>
+        <a class="bouton" href="deploiement.html">Home Assistance</a>
+        <a class="bouton" href="raspberry.html">Rasberry Pi</a>
+        <a class="bouton" href="capteurs.html">Capteur</a>
+        <a class="bouton" href="plans.html">Plan</a>
+    </div>
+<ol class="toc-list" role="list"></ol>
+<hr>
+
+<div class="content">
+
+<h1>📚 Tutoriel Floorplan Home Assistant</h1>
+
+<ul class="menu">
+
+    <!-- RENDU FINAL -->
+    <li>
+        <h2>Rendu final</h2>
+        <div style="text-align:center;">
+            <img src="../images/floorplan_example.png" alt="Schéma floorplan"
+                 style="max-width: 60%; height: auto;">
+            <p>Plan interactif montrant les températures actuelles d’un étage</p>
+        </div>
+    </li>
+
+    <!-- STRUCTURE -->
+    <li>
+        <h2>Structure du floorplan</h2>
+
+        <p>
+            Pour afficher efficacement la température dans un bâtiment, nous allons créer une carte interactive
+            dont la couleur change en fonction des capteurs.
+            Ce tutoriel est un résumé simple.
+        </p>
+
+        <a class="black" href="https://www.youtube.com/playlist?list=PL5xKVw-BInX1phV-Tnjznwd2YG5mEOvWL" target="_blank">
+            ▶ Voir la vidéo sur floorplan
+        </a>
+
+        <p>
+            Pour obtenir un plan final, il faut d’abord générer un SVG (conseillé avec Inkscape)
+            avec une structure bien particulière.
+        </p>
+    </li>
+
+    <!-- CREATION MAP -->
+    <li>
+        <h2>Création de la map</h2>
+        <div id="creation" class="section">
+
+            <ul>
+                <li>1. Placer les murs → séparer les pièces</li>
+                <li>2. Placer les pièces → identifier les zones (background_numeroDeSalle)</li>
+                <li>3. Placer les zones de texte → identifier les zones (temp_value_numeroDeSalle)</li>
+            </ul>
+
+            <div style="text-align:center;">
+                <img src="../images/schema_floorplan.png" alt="Exemple floorplan"
+                     style="max-width: 70%; height: auto;">
+                <p>Structure du plan (Les couches inférieur doivent être créer en première)</p>
+            </div>
+
+            <p>
+                Il faut associer à chaque élément un ID bien particulier pour qu'il soit reconnu par Home Assistant.
+                Si le numéro de la salle est <strong>007</strong> :
+            </p>
+
+            <ul>
+                <li>
+                    Zone de texte (température) :
+                    <code>temp_value_007</code>
+                </li>
+                <li>
+                    Rectangle de la salle (couleur) :
+                    <code>background_007</code>
+                </li>
+            </ul>
+
+            <div class="warning">
+                ⚠️ Attention : bien définir les <strong>ID</strong> et pas seulement les <strong>tags</strong>.
+            </div>
+
+            <div style="text-align:center;">
+                <img src="../images/example id.jpeg" alt="Schéma floorplan"
+                     style="max-width: 70%; height: auto;">
+                <p>Exemple d’identification</p>
+            </div>
+
+        </div>
+    </li>
+
+    <!-- HOME ASSISTANT -->
+    <li>
+    <h2>Ajouter une map dans Home Assistant</h2>
+    <div id="ha" class="section">
+
+        <ul>
+            <li><strong>1.</strong> Préparer ton fichier SVG (avec IDs)</li>
+
+            <li><strong>2.</strong> Uploader dans :
+                <code>/config/www/NomDuBatiment/floorplan.svg</code>
+            </li>
+
+            <li><strong>3.</strong> Accès via :
+                <code>/local/NomDuBatiment/floorplan.svg</code>
+            </li>
+
+            <li><strong>4.</strong> ⚠️ Ne PAS utiliser la carte Image</li>
+
+            <li><strong>5.</strong> Utiliser une carte custom :
+                <code>canvas-animated-card</code> ou <code>floorplan-card</code>
+            </li>
+        </ul>
+
+        <p><strong>Exemple avec canvas-animated-card :</strong></p>
+
+        <pre><code>
+                type: custom:canvas-animated-card
+                image: /local/NomDuBatiment/floorplan.svg
+        </code></pre>
+
+        <div class="warning">
+            ⚠️ La carte Image classique ne permet pas d’exploiter les IDs du SVG.
+            Pour un floorplan interactif, il faut utiliser une carte personnalisée.
+        </div>
+
+        <div style="text-align:center;">
+            <img src="../images/en_cours.jpg" alt="Rendu Home Assistant"
+                 style="max-width: 70%; height: auto;">
+            <p>Rendu dans Home Assistant</p>
+        </div>
+
+    </div>
+</li>
+
+    <!-- CANVAS CARD -->
+    <li>
+        <h2>Installation de canvas-animated-card</h2>
+        <div id="canvas" class="section">
+
+            <ul>
+                <li>Créer le dossier : <code>/config/www</code></li>
+                <li>Ajouter le fichier : <code>/config/www/canvas-animated-card.js</code></li>
+                <li>Ajouter la ressource : <code>/local/canvas-animated-card.js</code> (type : JavaScript Module)</li>
+                <li>Créer un dashboard dans Home Assistant</li>
+                <li>Ajouter une carte → Manual</li>
+                <li>Coller ce code YAML :</li>
+            </ul>
+
+            <pre><code>
+            type: "custom:canvas-animated-card"
+            </code></pre>
+
+        </div>
+    </li>
+
+</ul>
+
+</div>
+
+    <footser class="footer">
+        <div class="imagebandeau" href=""><img src="../images/Logo_Centrale_Lyon_Rouge.png" alt=""></div>
+        <div class="cours"><div class="textefooter">Projet réalisé dans le cadre du cours</div><div class="textefooter">MSO_INFO_3_8 Projet Informatique</div></div>
+        <div class="eleves">
+            <div class="textefooter">Projet réalisé par</div>
+            <div class="textefooter">Patricio José SILVA</div>
+            <div class="textefooter">Mathieu LONDICHE</div>
+            <div class="textefooter">Ulysse DURAND</div>
+            <div class="textefooter">Louis ROBBE GODARD</div>
+        </div>
+        <div class="tuteur">
+            <div class="textefooter">Projet encadré par</div>
+            <div class="textefooter">Olivier DESSOMBZ</div></div>
+    </footer>
+
+    <script src="..\config.js"></script>
+</BODY>
+</HTML>

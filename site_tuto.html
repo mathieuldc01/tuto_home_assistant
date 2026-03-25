@@ -1,0 +1,135 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<HTML>
+<HEAD>
+<!-- Style -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
+
+<!-- Script Prism -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+
+<!-- Plugin copy -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+
+<!-- Style du toolbar -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet" />
+
+
+<link rel="stylesheet" href="config.css">
+<TITLE></TITLE>
+</HEAD>
+<BODY>
+<div class="bandeau">
+        <div class="imagebandeau" href=""><img src="images/Logo_Centrale_Lyon_Rouge.png" alt=""></div>
+        <a class="bouton" href="site_tuto.html" >Accueil</a> 
+        <a class="bouton" href="Pages/requirements.html">Requirement</a>
+        <a class="bouton" href="Pages/deploiement.html">Home Assistance</a>
+        <a class="bouton" href="Pages/raspberry.html">Rasberry Pi</a>
+        <a class="bouton" href="Pages/capteurs.html">Capteur</a>
+        <a class="bouton" href="Pages/plans.html">Plan</a>
+    </div>
+<ol class="toc-list" role="list"></ol>
+<hr>
+
+
+
+    <div class="content">
+        <h1>Régulation thermique, supervision de mesures de températures</h1>
+
+
+        <div style="display: flex; gap: 20px; align-items: flex-start;">
+        <div style="flex: 1; text-align: center;">
+            <img src="images/en_cours.jpg" alt="Visualisation spatiale" 
+                style="max-width: 70%; height: auto; object-fit: contain;">
+            <p>Figure 1 : Affichage des température dans chaque salle d'un batiment</p>
+        </div>
+        <div style="flex: 1; text-align: center;">
+            <img src="images/en_cours.jpg" alt="Suivi temporel" 
+                style="max-width: 70%; height: auto; object-fit: contain;">
+            <p>Figure 2 : Evolution de la température dans une salle</p>
+        </div>
+        </div>
+        
+
+        <h2>Problématique</h2>
+
+        <p>Les locaux d’une surface importante, comme ceux de l’École Centrale de Lyon, sont particulièrement soumis
+        aux problèmes de régulation thermique faute de pouvoir faire des relevés de température voire
+        d’hygrométrie en de multiples points. On retrouve cette problématique dans les locaux industriels, les
+        locaux informatiques, et évidemment dans une moindre mesure chez les particuliers. Ces mesures sont
+        importantes pour plusieurs raisons : la qualité de vie, la sécurité des matériels ou des denrées, la limitation
+        de la consommation d'énergie, mais aussi pour la détection de problèmes (chauffage/clim en panne, fuites
+        etc.)</p>
+
+        <p>Il s’agit de mettre en place un système de surveillance des températures (voire de l’hygrométrie) dans les
+        locaux de l’École, en particulier les locaux sensibles (salles climatisées, locaux informatiques, etc.), les locaux
+        standards (bureaux, salles de cours, etc.) et sur le système de chauffage.</p>
+
+        <p>La solution envisagée pour collecter des données (température/hygrométrie) est d’utiliser des capteurs
+        simples (1wire DS18B20) couplés à des rapsberry PI, de façon à pouvoir multiplier les points de mesures
+        sans faire exploser les coûts, et assurer une surveillance et une supervision en déterminant les situations
+        de fonctionnement normal et anormal (reporting, affichage graphique, alertes, etc.) par le biais d’outils
+        interactifs (web, applis portables, etc.). Un PE a permis de débroussailler la problématique, sans arriver à
+        un outil fonctionnel.</p>
+
+    <h2>Présentation du projet</h2>
+
+    <p>
+    Grâce à Home Assistant et à son module Floor Plan, nous avons pu mettre en place un système automatisé de relevé 
+    de température, accompagné d’une visualisation spatiale des données (Figure 1), ainsi que d’un suivi 
+    temporel (Figure 2). 
+    Home Assistant permet par ailleurs de déployer facilement cette solution sur n’importe quel serveur.
+     Nous avons choisi de le déployer sur rasberry pi pour plus de facilité d'utilisation
+    </p>
+
+
+    <p>
+    Dans ce projet, nous avons choisi d’utiliser deux types de capteurs :
+    </p>
+
+    <ul>
+        <li>Des capteurs filaires, directement reliés au système</li>
+        <li>Des capteurs sans fil, utilisant des modules ESP32 pour la communication</li>
+    </ul>
+
+    <p>
+    Les autres pages de ce tutoriel détaillent les différentes étapes de mise en œuvre du projet :
+    </p>
+
+    <ul>
+   
+    <li><a class ="black" href="Pages/requirements.html">Prérequis (requirements)</a></li>
+    <li><a class ="black" href="Pages/deploiement.html">Déploiement de Home Assistant sur un serveur</a></li>
+    <li><a class ="black" href="Pages/raspberry.html">Configuration du Raspberry Pi et de la communication</a></li>
+    <li><a class ="black" href="Pages/plans.html">Création des plans</a></li>
+    <li><a class ="black" href="Pages/capteurs.html">Paramétrage des capteurs</a></li>
+
+    </ul>
+
+    <p>
+    À noter que chaque composant de la solution est indépendant et peut être remplacé par des alternatives, notamment en ce qui concerne les capteurs.
+    </p>
+        
+    </div>
+
+    
+    <footer class="footer">
+        <div class="imagebandeau" href=""><img src="images/Logo_Centrale_Lyon_Rouge.png" alt=""></div>
+        <div class="cours"><div class="textefooter">Projet réalisé dans le cadre du cours</div><div class="textefooter">MSO_INFO_3_8 Projet Informatique</div></div>
+        <div class="eleves">
+            <div class="textefooter">Projet réalisé par</div>
+            <div class="textefooter">Patricio José SILVA</div>
+            <div class="textefooter">Mathieu LONDICHE</div>
+            <div class="textefooter">Ulysse DURAND</div>
+            <div class="textefooter">Louis ROBBE GODARD</div>
+        </div>
+        <div class="tuteur">
+            <div class="textefooter">Projet encadré par</div>
+            <div class="textefooter">Olivier DESSOMBZ</div></div>
+    </footer>
+    <script src="config.js"></script>
+</BODY>
+</HTML>
+

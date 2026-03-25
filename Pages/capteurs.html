@@ -1,0 +1,399 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<HTML>
+<HEAD>
+
+<!-- Script Prism -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+
+<!-- Plugin copy -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+
+
+
+
+<link rel="stylesheet" href="../config.css">
+<TITLE></TITLE>
+</HEAD>
+<BODY>
+    <div class="bandeau">
+        <div class="imagebandeau" href=""><img src="../images/Logo_Centrale_Lyon_Rouge.png" alt=""></div>
+        <a class="bouton" href="../site_tuto.html" >Accueil</a> 
+        <a class="bouton" href="requirements.html">Requirement</a>
+        <a class="bouton" href="deploiement.html">Home Assistance</a>
+        <a class="bouton" href="raspberry.html">Rasberry Pi</a>
+        <a class="bouton" href="capteurs.html">Capteur</a>
+        <a class="bouton" href="plans.html">Plan</a>
+    </div>
+<ol class="toc-list" role="list"></ol>
+<hr>
+
+
+
+
+
+<div class="content">
+<h1>Ajout de capteurs</h1>
+
+<p>
+Plusieurs méthodes sont possibles pour intégrer des capteurs. Soit on relie directement les capteurs en filaire au Raspberry Pi, soit on utilise une communication sans fil via un ESP32.
+Dans cette section, les deux approches seront abordées. À noter qu’il existe d’autres solutions, mais nous présentons ici celles utilisées dans notre projet.
+</p>
+
+<ul class="menu">
+
+    <li><h2>Connexion d'un capteur 1-Wire</h2>
+    <p>
+    Tout d’abord, les deux méthodes nécessitent un branchement similaire du capteur, 
+    basé sur une connexion 1-Wire.
+    </p>
+
+    <div id="1-wire">
+
+
+     
+        <div style="display: flex; gap: 20px; align-items: flex-start;">
+        <div style="flex: 1; text-align: center;">
+            <img src="../images/1_wire.png" alt="1_wire" 
+                style="max-width: 60%; height: auto; object-fit: contain;">
+            <p>Branchement du capteur 1-Wire</p>
+        </div>
+        </div>
+
+
+
+        <p><strong>Connexion au Raspberry Pi / ESP32 :</strong></p>
+        <ul>
+            <li><strong>VCC</strong> → borne VCC</li>
+            <li><strong>GND</strong> → borne GND</li>
+            <li><strong>DQ (Data)</strong> → un GPIO</li>
+        </ul>
+
+    </div>
+    </li>
+    <li>
+  <h2>Paramétrage d'un OWServer</h2>
+
+  <p><strong>Intérêt de OWServer :</strong></p>
+  <p>
+    OWServer (faisant partie de :contentReference[oaicite:1]{index=1}) permet de centraliser l'accès aux capteurs One-Wire.
+    Il agit comme un serveur qui expose les capteurs (température, humidité, etc.) via le réseau ou en local.
+    Cela permet à plusieurs applications ou machines d'accéder aux capteurs sans connexion directe au bus 1-Wire.
+  </p>
+
+  <div id="Ow_server">
+
+    <p><strong>Installation d’OWServer :</strong></p>
+    <div class="command">
+      sudo apt-get update<br>
+      sudo apt-get install owserver owfs
+    </div>
+
+    <p>Configuration :</p>
+    <div class="command">
+      sudo nano /etc/owfs.conf
+    </div>
+
+    <p>Ajouter ou modifier les lignes suivantes :</p>
+
+    <div class="command">
+      !server : server: localhost:4304<br>
+      server: w1<br>
+      server: port = localhost:4304<br>
+      server: address = 0.0.0.0
+    </div>
+
+    <p>Redémarrer le serveur :</p>
+    <div class="command">
+      sudo systemctl restart owserver
+    </div>
+
+    <p>Vérifier que le service fonctionne :</p>
+    <div class="command">
+      sudo systemctl status owserver
+    </div>
+
+    <p>Lister les capteurs détectés :</p>
+    <div class="command">
+      ls /sys/bus/w1/devices/
+    </div>
+
+  </div>
+</li>
+    <li><h2>Activation et vérification du protocole 1-Wire sur Raspberry Pi</h2>
+
+    <div id="Capteur_to_Pi">
+
+        <p><strong>Vérifier que le module est actif :</strong></p>
+
+        <div class="command">
+lsmod | grep w1
+        </div>
+
+        <p>
+        Si rien ne s’affiche, modifier le fichier de configuration :
+        </p>
+
+        <div class="command">
+sudo nano /boot/firmaware/config.txt
+        </div>
+
+        <p>Ajouter la ligne suivante :</p>
+
+        <div class="command">
+dtoverlay=w1-gpio
+        </div>
+
+        <p>Redémarrer le Raspberry Pi :</p>
+
+        <div class="command">
+sudo reboot
+        </div>
+
+        <p>Lister les capteurs détectés :</p>
+
+        <div class="command">
+cd /sys/bus/w1/devices/
+ls
+        </div>
+
+    </div>
+    </li>
+    <li><h2>Ajout d'un capteur 1-Wire sur Raspberry Pi dans Home Assistant</h2>
+
+    <div id="Capteur_to_Pi_ha">
+
+        <p><strong>Dans Home Assistant :</strong></p>
+
+        <ul>
+            <li>Paramètres</li>
+            <li>Appareils et services</li>
+            <li>1-Wire</li>
+        </ul>
+
+        <p>Cliquer sur <strong>Ajouter un pont</strong> puis entrer :</p>
+
+        <ul>
+            <li>Adresse : IP du Raspberry Pi</li>
+            <li>Port : 4304</li>
+        </ul>
+
+    </div>
+    </li>
+    <li>
+<h2>Préparation de l'ESP32</h2>
+
+<div id="prep_esp32">
+
+<p>
+Flash en 3 étapes :
+<br>
+1. debug.yaml → détecter les capteurs<br>
+2. récupérer les adresses<br>
+3. config.yaml → config finale
+</p>
+
+<ul>
+
+<!-- DEBUG -->
+<li onclick="showSection('debug_section')" class="toggle">
+▶ Génération du fichier debug.yaml
+</li>
+
+<div id="debug_section" class="section-content hidden">
+
+<div class="container">
+
+<label>Nom</label>
+<input id="debug_name" value="esp32-debug">
+
+<label>Board</label>
+<select id="debug_board">
+    <option>esp32dev</option>
+    <option selected>esp32-c3-devkitm-1</option>
+</select>
+
+<label>SSID</label>
+<input id="debug_ssid">
+
+<label>Password</label>
+<input id="debug_password">
+
+<h3>GPIO</h3>
+<div id="gpio"></div>
+
+<button type="button" onclick="add_gpio('gpio')">➕ Ajouter GPIO</button>
+
+<br><br>
+
+<button type="button" onclick="generateDebug()">Télécharger debug.yaml</button>
+
+</div>
+</div>
+
+<!-- FLASH -->
+<li class="toggle" onclick="showSection('flash')">
+    ▶ Flash ESP32 et récupération des ID
+</li>
+
+<div id="flash" class="section-content hidden">
+
+    <p><strong>Commande de flash :</strong></p>
+    <div class="command">
+        esphome run config.yaml
+    </div>
+
+    <p>
+        Une fois la commande exécutée, choisissez le mode de téléversement :
+        <br>
+        👉 <strong>USB recommandé</strong> (surtout lors du premier flash)
+    </p>
+    <div class="command">
+    Found multiple options for uploading, please choose one:
+    [1] /dev/cu.usbmodem1101 (USB JTAG/serial debug unit)
+    [2] Over The Air (esp32-1.local)
+    </div>
+
+    <p>
+        Ensuite, observez les logs pour récupérer les adresses des capteurs DS18B20.
+    </p>
+
+
+
+    <div style="display: flex; gap: 20px; align-items: flex-start; margin-top: 20px;">
+
+        <div style="flex: 1; text-align: center;">
+            <img src="../images/log.jpeg" alt="Logs ESP32"
+                 style="max-width: 80%; height: auto; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+
+            <p style="margin-top: 10px; font-size: 0.9em; color: #555;">
+                Exemple de logs d’un ESP32 connecté à deux capteurs sur le GPIO6.
+                <br>
+                Adresses détectées :
+                <br>
+                <code>0x5e00000068c6f028</code><br>
+                <code>0xc600000067d9ed28</code>
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- CONFIG -->
+<li onclick="showSection('config_section')" class="toggle">
+▶ Génération du fichier config.yaml
+</li>
+
+<div id="config_section" class="section-content hidden">
+
+<div class="container">
+
+<label>Nom</label>
+<input id="config_name" value="esp32-config">
+
+<label>Board</label>
+<select id="config_board">
+    <option>esp32dev</option>
+    <option selected>esp32-c3-devkitm-1</option>
+</select>
+
+<label>SSID</label>
+<input id="config_ssid">
+
+<label>Password</label>
+<input id="config_password">
+
+<h3>Capteurs</h3>
+<div id="sensors"></div>
+
+<button type="button" onclick="addSensor()">➕ Ajouter capteur</button>
+
+<br><br>
+
+<button type="button" onclick="generateConfig()">Télécharger config.yaml</button>
+
+</div>
+</div>
+
+</ul>
+</div>
+</li>
+    <li><h2>Ajouter un ESP32 à Home Assistant</h2>
+
+    <div id="esp32_to_ha">
+
+        <p>
+        Il est nécessaire de flasher votre ESP32 avant de pouvoir l’ajouter à Home Assistant.
+        </p>
+
+        <h4>Étape 1 : Préparer Home Assistant</h4>
+
+        <ul>
+            <li>Aller dans <strong>Paramètres</strong></li>
+            <li>Puis <strong>Appareils et services</strong></li>
+            <li>Cliquer sur <strong>Ajouter une intégration</strong></li>
+        </ul>
+        <div style="display: flex; gap: 20px; align-items: flex-start;">
+        <div style="flex: 1; text-align: center;">
+            <img src="../images/esphome.jpeg" alt="1_wire" 
+                style="max-width: 60%; height: auto; object-fit: contain;">
+            <p>Ajout d'une nouvelle intégration</p>
+        </div>
+        </div>
+
+        <h4>Étape 2 : Ajouter ESPHome</h4>
+
+        <p>
+        Recherchez et sélectionnez <strong>ESPHome</strong>.
+        Entrez ensuite l’adresse IP de l’ESP32.
+        </p>
+        <div style="display: flex; gap: 20px; align-items: flex-start;">
+        <div style="flex: 1; text-align: center;">
+            <img src="../images/log_2.jpeg" alt="1_wire" 
+                style="max-width: 60%; height: auto; object-fit: contain;">
+            <p>Recherche de l'IP dans les logs</p>
+        </div>
+        </div>
+
+        <h4>Étape 3 : Vérification</h4>
+
+        <p>
+        Vérifiez que les entités apparaissent correctement dans le tableau de bord.
+        </p>
+
+        <div style="display: flex; gap: 20px; align-items: flex-start;">
+        <div style="flex: 1; text-align: center;">
+            <img src="../images/en_cours.jpg" alt="1_wire" 
+                style="max-width: 60%; height: auto; object-fit: contain;">
+            <p>ESP32 Intégréer à Home Assistant</p>
+
+        <div class="command">
+api:
+        </div>
+
+    </div>
+    </li>
+</ul>
+</div>
+
+    <footer class="footer">
+        <div class="imagebandeau" href=""><img src="../images/Logo_Centrale_Lyon_Rouge.png" alt=""></div>
+        <div class="cours"><div class="textefooter">Projet réalisé dans le cadre du cours</div><div class="textefooter">MSO_INFO_3_8 Projet Informatique</div></div>
+        <div class="eleves">
+            <div class="textefooter">Projet réalisé par</div>
+            <div class="textefooter">Patricio José SILVA</div>
+            <div class="textefooter">Mathieu LONDICHE</div>
+            <div class="textefooter">Ulysse DURAND</div>
+            <div class="textefooter">Louis ROBBE GODARD</div>
+        </div>
+        <div class="tuteur">
+            <div class="textefooter">Projet encadré par</div>
+            <div class="textefooter">Olivier DESSOMBZ</div></div>
+    </footer>
+
+    <script src="..\config.js"></script>
+</BODY>
+</HTML>

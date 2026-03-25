@@ -1,0 +1,222 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+
+
+<HTML>
+<HEAD>
+<link rel="stylesheet" href="../config.css">
+<TITLE></TITLE>
+</HEAD>
+<BODY>
+    <div class="bandeau">
+        <div class="imagebandeau" href=""><img src="../images/Logo_Centrale_Lyon_Rouge.png" alt=""></div>
+        <a class="bouton" href="../site_tuto.html" >Accueil</a> 
+        <a class="bouton" href="requirements.html">Requirement</a>
+        <a class="bouton" href="deploiement.html">Home Assistance</a>
+        <a class="bouton" href="raspberry.html">Rasberry Pi</a>
+        <a class="bouton" href="capteurs.html">Capteur</a>
+        <a class="bouton" href="plans.html">Plan</a>
+    </div>
+<ol class="toc-list" role="list"></ol>
+<hr>
+
+<div class="content">
+
+    <h2>Requirements & Conseils d'installation</h2>
+
+    <!-- MENU INTERACTIF -->
+    <ul class="menu">
+        <li><h2>Pour l'installation de Home Assistant</h2>
+
+    <div id="homeAssistance" class="section">
+
+        <ul>
+
+            <li onclick="showSection('git')" class="toggle">
+                ▶ Git est nécessaire pour cloner le dépôt
+
+                <div id="git" class="section-content hidden">
+
+                    <h3>Installation de Git</h3>
+
+                    <ul>
+                        <li>
+                            Windows : 
+                            <a class="black" href="https://git-scm.com/downloads" target="_blank">
+                                télécharger depuis le site officiel
+                            </a>
+                        </li>
+
+                        <li>
+                            Linux :
+                            <div class="command">
+                                sudo apt update<br>
+                                sudo apt install git
+                            </div>
+                        </li>
+
+                        <li>
+                            macOS :
+                            <div class="command">
+                                brew install git
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+            </li>
+
+            <!-- ================= DOCKER ================= -->
+
+            <li onclick="showSection('docker')" class="toggle">
+                ▶ Docker est nécessaire pour exécuter Home Assistant
+
+                <div id="docker" class="section-content hidden">
+
+                    <h3>Installation de Docker</h3>
+
+                    <ul>
+                        <li>
+                            Windows / Mac :
+                            <a class="black" href="https://www.docker.com/products/docker-desktop/" target="_blank">
+                                Télécharger Docker Desktop
+                            </a>
+                        </li>
+
+                        <li>
+                            Linux :
+                            <div class="command">
+                                sudo apt update<br>
+                                sudo apt install docker.io docker-compose
+                            </div>
+                        </li>
+                    </ul>
+
+                    <p>
+                        Après installation, vérifier que Docker fonctionne :
+                    </p>
+
+                    <div class="command">
+                        docker --version
+                    </div>
+
+                    <div class="command">
+                        docker compose version
+                    </div>
+
+                </div>
+            </li>
+
+        </ul>
+
+    </div>
+        </li>
+        <li><h2>Pour le déploiement de capteurs ESP32</h2>
+            <div id="esp32" class="section">
+        
+
+        <p>Pour pouvoir flasher l’ESP32, vous devez avoir :</p>
+        <ul>
+            <li onclick="showSection('python')" class="toggle">  ▶ Python version 3.13</li>
+                <div id="python" class="section-content hidden">
+        
+
+        <p>Téléchargez Python depuis le site officiel :
+            <a class="black" href="https://www.python.org/downloads/" target="_blank">
+                https://www.python.org/downloads/
+            </a>
+        </p>
+
+        <h3>Windows</h3>
+        <ol>
+            <li>Téléchargez l’installateur</li>
+            <li>Lancez l’installation</li>
+            <li>Cochez <strong>"Add Python to PATH"</strong></li>
+            <li>Cliquez sur <strong>Install Now</strong></li>
+        </ol>
+
+        <div class="warning">
+            ⚠️ Très important : cocher <strong>Add Python to PATH</strong> sinon Python ne sera pas accessible dans le terminal.
+        </div>
+
+        <h3>Linux</h3>
+        <p>Installer Python et pip :</p>
+        <div class="command">
+            sudo apt update<br>
+            sudo apt install python3 python3-pip
+        </div>
+
+        <h3>macOS</h3>
+        <p>Avec Homebrew :</p>
+        <div class="command">
+            brew install python
+        </div>
+                </div>
+
+            <li onclick="showSection('esphome')" class="toggle">  ▶ ESPHome version 2025.12</li>
+                <div id="esphome" class="section-content hidden">
+
+        <p>Une fois Python installé, ouvrez un terminal ou une invite de commande et tapez :</p>
+
+        <div class="command">
+            pip install esphome==2025.12.0
+        </div>
+
+        <p>Vérifier l'installation :</p>
+
+        <div class="command">
+            esphome version
+        </div>
+
+        <p>Si la commande ne fonctionne pas :</p>
+
+        <div class="command">
+            python -m esphome version
+        </div>
+    </div>
+        </ul>
+            </div>
+        </li>
+        <!-- <li>Pour le déploiement sur Raspberry</li>
+            <div id="raspberry" class="section">
+        <ul>
+            <li>Requirement 1</li>
+            <li>Requirement 2</li>
+            <li>Requirement 3</li>
+        </ul>
+    </div>
+    </li>-->
+        <li><h2>Matériel nécessaire</h2>
+            <div id="materiel" class="section">
+        <ul>
+            <li>Capteur de température adressable (idéal <a class="black" href=https://fr.aliexpress.com/item/1005008125992889.html?UTABTest=aliabtest128998_32161&src=bing&albch=shopping&acnt=135105396&albcp=555400518&albag=1307320545295611&slnk=&trgt=pla-2333507271903258&plac=&crea=81707593526441&netw=o&device=c&mtctp=e&utm_source=Bing&utm_medium=shopping&utm_campaign=PA_Bing_FR_Pmax_ALL_TROAS_PlaceOrder_AESupply_25.4.24&utm_content=PA_Bing_FR_Pmax_ALL_TROAS_202504%2F24_newstore_PlaceOrder&utm_term=capteur%20de%20temp%C3%A9rature%20dallas&msclkid=df38f4e349ec122e57c89d58a00ce195&aff_fcid=1c8a97f166af48e699e196aac1a04824-1773922791398-07438-UneMJZVf&aff_fsk=UneMJZVf&aff_platform=aaf&sk=UneMJZVf&aff_trace_key=1c8a97f166af48e699e196aac1a04824-1773922791398-07438-UneMJZVf&terminal_id=0a55664d57db49e097be64c2c4f91e39&OLP=1123114608_f_group2&o_s_id=1123114608&gatewayAdapt=glo2fra target = _blank>DS18B20</a>)</li>
+            <li><a class="black" target="_blank" href="https://fr.aliexpress.com/item/32317131954.html?UTABTest=aliabtest128998_32161&src=bing&albch=shopping&acnt=135105396&albcp=555400518&albag=1307320545295611&slnk=&trgt=pla-2333507271903258&plac=&crea=81707593526441&netw=o&device=c&mtctp=e&utm_source=Bing&utm_medium=shopping&utm_campaign=PA_Bing_FR_Pmax_ALL_TROAS_PlaceOrder_AESupply_25.4.24&utm_content=PA_Bing_FR_Pmax_ALL_TROAS_202504%2F24_newstore_PlaceOrder&utm_term=r%C3%A9sistance%204.7%20kohm&msclkid=941a8b01a00012453f82e2ba4b821c56&aff_fcid=6343a41e68584e7a868c1cf1499e2140-1773923206109-02931-UneMJZVf&aff_fsk=UneMJZVf&aff_platform=aaf&sk=UneMJZVf&aff_trace_key=6343a41e68584e7a868c1cf1499e2140-1773923206109-02931-UneMJZVf&terminal_id=0a55664d57db49e097be64c2c4f91e39&OLP=1123114608_f_group2&o_s_id=1123114608&gatewayAdapt=glo2fra">Résistance 4.7 kohm</a> </li>
+            <li><a class="black" traget="_blank" href="https://fr.aliexpress.com/item/1005005871122070.html?UTABTest=aliabtest128998_32161&src=bing&albch=shopping&acnt=135095331&albcp=554358948&albag=1309518793593597&slnk=&trgt=pla-4585444531847149&plac=&crea=81845014910635&netw=o&device=c&mtctp=e&utm_source=Bing&utm_medium=shopping&utm_campaign=PA_Bing_FR_PLA_PC_ALL_ECPC_20230403&utm_content=Ad%20group%20%231&utm_term=rasberry%20achat&msclkid=68cefdf7ad3b13cefeec944c411b28d8&aff_fcid=e2d727dead9c44f388d6e08dad7d5d0f-1773923689951-07859-UneMJZVf&aff_fsk=UneMJZVf&aff_platform=aaf&sk=UneMJZVf&aff_trace_key=e2d727dead9c44f388d6e08dad7d5d0f-1773923689951-07859-UneMJZVf&terminal_id=0a55664d57db49e097be64c2c4f91e39&OLP=1123114608_f_group2&o_s_id=1123114608&gatewayAdapt=glo2fra">Raspberry Pi 3B+</a> ou version d'après</li>
+            <li>ESP32 (dans notre cas <a class="black" target="_blank" href="https://fr.aliexpress.com/item/1005010769798085.html?spm=a2g0o.productlist.main.2.1298273aC63H48&algo_pvid=7606ba8c-b9cb-4de1-b667-6b7d542bb5e5&algo_exp_id=7606ba8c-b9cb-4de1-b667-6b7d542bb5e5-1&pdp_ext_f=%7B%22order%22%3A%2231%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21EUR%213.99%212.99%21%21%2130.80%2123.11%21%4021038e6617739238297392257e19a0%2112000053452294128%21sea%21FR%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3Aeb5668dc%3Bm03_new_user%3A-29895%3BpisId%3A5000000197682604&curPageLogUid=SXYiqUtedLSg&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005010769798085%7C_p_origin_prod%3A">ESP-32-C3</a>)</li>
+        </ul>
+    </div>
+        </li>
+
+</div>
+
+
+    <footer class="footer">
+        <div class="imagebandeau" href=""><img src="../images/Logo_Centrale_Lyon_Rouge.png" alt=""></div>
+        <div class="cours"><div class="textefooter">Projet réalisé dans le cadre du cours</div><div class="textefooter">MSO_INFO_3_8 Projet Informatique</div></div>
+        <div class="eleves">
+            <div class="textefooter">Projet réalisé par</div>
+            <div class="textefooter">Patricio José SILVA</div>
+            <div class="textefooter">Mathieu LONDICHE</div>
+            <div class="textefooter">Ulysse DURAND</div>
+            <div class="textefooter">Louis ROBBE GODARD</div>
+        </div>
+        <div class="tuteur">
+            <div class="textefooter">Projet encadré par</div>
+            <div class="textefooter">Olivier DESSOMBZ</div></div>
+    </footer>
+
+    <script src="..\config.js"></script>
+</BODY>
+</HTML>

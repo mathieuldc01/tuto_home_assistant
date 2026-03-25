@@ -1,0 +1,277 @@
+/* Utilisation de variables pour changer les couleurs facilement */
+:root {
+    --rouge-principal: #b22133;
+    --noir-texte: #252525;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+    margin: 0;
+    padding-top: 7rem;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+    font-size: 1.5rem
+}
+
+
+h1{
+border-bottom:3px solid var(--rouge-principal);
+padding-bottom:10px;
+}
+
+h2{
+margin-top:40px;
+color:#333;
+}
+
+.command{
+background:#1e1e1e;
+color:#dcdcdc;
+padding:15px;
+border-radius:6px;
+font-family:monospace;
+margin:10px 0;
+overflow-x:auto;
+}
+
+.info{
+background:#eef6ff;
+border-left:5px solid var(--rouge-principal);
+padding:15px;
+margin:15px 0;
+border-radius:5px;
+}
+
+.warning{
+background:#fff3cd;
+border-left:5px solid #ffc107;
+padding:15px;
+margin:15px 0;
+border-radius:5px;
+}
+
+
+.section{
+border:1px solid #ddd;
+border-radius:6px;
+margin-bottom:10px;
+overflow:hidden;
+background:#fafafa;
+
+}
+
+.section-title{
+background:var(--rouge-principal);
+color:white;
+padding:15px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.toggle {
+    width: 100%;
+    text-align: left;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.toggle:hover {
+    background-color: #e0e0e0;
+}
+
+
+
+.section-content{
+padding:20px;
+background:#fafafa;
+}
+
+.command{
+background:#1e1e1e;
+color:#dcdcdc;
+padding:12px;
+border-radius:5px;
+font-family:monospace;
+margin:10px 0;
+}
+
+.content_tuto {
+    max-width: 900px;
+    margin: 0 auto; /* centre horizontalement */
+    padding: 0 1rem; /* optionnel : un peu d'air sur les côtés */
+}
+
+p {
+    font-family: Arial, sans-serif;
+    font-size: 1.5rem; /* S'adapte à la taille par défaut du navigateur */
+    color: var(--noir-texte);
+    line-height: 1.5;
+    margin-left: 1rem;
+}
+
+li {
+    font-family: Arial, sans-serif;
+    font-size: 1.5rem; /* S'adapte à la taille par défaut du navigateur */
+    color: var(--noir-texte);
+    line-height: 1.5;
+    margin-left: 1rem;
+}
+
+code{
+    margin-left: 3rem;
+}
+
+.textefooter {
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+    font-size: 1.1rem;
+    text-decoration: none;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+h1 {
+    font-family: 'Archivo', sans-serif;
+    font-weight: bold;
+    font-size: 3.5rem; 
+    color: var(--rouge-principal);
+    text-align: center;
+}
+
+h2 {
+    font-family: 'Archivo', sans-serif;
+    font-size: 2.5rem;
+    color: var(--rouge-principal);
+    margin-left: 3rem;
+}
+
+h3 {
+    font-family: 'Archivo', sans-serif;
+    font-size: 2rem;
+    color: var(--noir-texte);
+    margin-left: 4rem;
+}
+
+.content {
+  flex: 1;
+  margin: 0 50px;
+  padding: 0 50px;
+}
+
+/* --- Le Bandeau de Navigation --- */
+.bandeau {
+    background-color: var(--rouge-principal);
+    position: fixed;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center; /* Aligne verticalement au centre */
+    padding: 10px 20px;
+    box-sizing: border-box;
+    z-index: 1000;
+    top: 0px;
+    transition: transform 0.6s ease-in-out; /* Animation fluide */
+    top: 0;
+}
+
+
+
+/* La classe qui sera ajoutée en JavaScript */
+.bandeau.hidden {
+    transform: translateY(-100%); /* Pousse le bandeau vers le haut de sa propre hauteur */
+}
+
+.footer {
+    background-color: var(--rouge-principal);
+    position: flex;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center; /* Aligne verticalement au centre */
+    padding: 10px 20px;
+    box-sizing: border-box;
+    z-index: 1000;
+    bottom: 0px;
+}
+
+/* Conteneur des boutons à gauche */
+.navigation {
+    display: flex;
+    gap: 20px; /* Espace entre les boutons */
+    margin-right: auto; /* Pousse l'image vers la droite */
+}
+
+.navigation a {
+    font-family: 'Archivo', sans-serif;
+    font-weight: bold;
+    color: #ffffff;
+    font-size: 1.1rem;
+    text-decoration: none;
+}
+
+
+/* On cible la balise <a> pour le style du texte */
+a.bouton {
+    font-family: 'Archivo', sans-serif;
+    font-weight: bold;
+    color: #ffffff;
+    font-size: 1.5rem;
+    
+    /* 1. Enlever le soulignement */
+    text-decoration: none; 
+    
+    /* Optionnel : ajout d'une petite transition pour l'effet au survol */
+    transition: 0.3s;
+
+    margin-right: 3.0rem;
+    margin-left: 3.0rem;
+}
+
+a.black {
+    font-weight: bold;
+    text-decoration: none; 
+    color: #000; /* ta couleur spéciale */
+}
+
+.hidden {
+    display: none;
+}
+
+.section {
+    margin-top: 20px;
+}
+
+
+
+a:hover {
+    opacity: 0.7;
+}
+
+img {
+    height: 100px; 
+    width: auto;
+}
+
+.toc-list,
+.toc-list ol {
+  list-style-type: none;
+}
+
+.toc-list {
+  padding: 0;
+}
+
+.toc-list ol {
+  padding-inline-start: 2ch;
+}
+
+.title {
+  color:#252525;
+}
+

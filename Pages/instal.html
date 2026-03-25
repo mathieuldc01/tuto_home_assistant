@@ -1,0 +1,280 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+
+
+<HTML>
+<HEAD>
+<link rel="stylesheet" href="../config.css">
+<TITLE></TITLE>
+</HEAD>
+<BODY>
+    <div class="bandeau">
+        <div class="imagebandeau"><img src="../images/Logo_Centrale_Lyon_Rouge.png" alt=""></div>
+        <a class="boutonacceuil" href="../site_tuto.html" >Accueil</a> 
+        <a class="boutontuto" href="../Pages/instal.html">Tutoriel d'installation</a>
+        <a class="boutonconfig" href="../Pages/configuration.html">Configuration</a>
+    </div>
+
+    <ol class="toc-list" role="list">
+        <h2>Sommaire</h2        >
+    <li>
+        <a href="#installation-distribution-debian">
+            <span class="title">Installation d'une distribution Debian sur un Raspberry Pi</span>
+        </a>
+    </li>
+    <li>
+        <a href="#connexion-rapsberry-pi">
+            <span class="title">Connexion au raspberry pi</span>
+        </a>
+    </li>
+    <li>
+        <a href="#connexion-home-assistant">
+            <span class="title">Connexion à home assistant</span>
+        </a>
+    </li>
+    <li>
+        <a href="#connexion-nouveau-reseau">
+            <span class="title">Connexion à un nouveau réseau</span>
+        </a>
+    </li>
+    <li>
+        <a href="#connexion-capteur-1wire">
+            <span class="title">Connexion d'un capteur 1wire</span>
+        </a>
+    </li>
+    <li>
+        <a href="#ajout-1wire-home-assistant">
+            <span class="title">Ajout d'un capteurs 1Wire à home assistant</span>
+        </a>
+        <ol role="list">
+
+            <li>
+                <a href="#ajout-capteur-home-assistant">
+                    <span class="title">Ajout de capteur dans home assistant</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#verification-bonne-connexion-capteur">
+                    <span class="title">Vérification de la bonne connexion des capteurs 1Wire</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#verification-installation-owserver">
+                    <span class="title">Vérification de la bonne installation de OWServer</span>
+                </a>
+            </li>
+        </ol>
+    </li>
+    <li>
+        <a href="#ajout-capteur-carte">
+            <span class="title">Ajout d'un capteur à la carte</span>
+        </a>
+    </li>
+    <li>
+        <a href="#ajout-carte-raspberry-pi">
+            <span class="title">Ajout d'une nouvelle carte sur le rapsberry pi</span>
+        </a>
+    </li>
+
+
+    <div class="content">
+        
+        <h2 id="installation-distribution-debian">Installation d'une distribution Debian sur un Raspberry Pi</h2>
+
+        <p>
+                Tout d'abord, aller sur le site https://www.raspberrypi.com/software/ et installer le **Raspberry Pi Imager**. <br>
+
+                Une fois le logiciel installé, sélectionner le bon appareil Raspberry Pi : <br>
+
+                ![Capture raspberry pi imager 1](raspberry_pi_imager1.png)
+
+                Choisir la bonne distribution voulue (ici Debian en x64) : <br>
+
+                ![Capture raspberry pi imager é](raspberry_pi_imager2.png)
+
+                Sélectionner ensuite la carte micro sd sur laquelle on souhaite installer l'OS. Il ne reste plus qu'à entrer les paramètres voulus dans le raspberry (nom d'utilisateur, mot de passe, paramètres réseaux, ...), puis l'installation peut être lancée. <br>
+
+                Une fois l'installation terminée, insérer la carte micro sd dans le Raspberry Pi puis le démarrer.
+        </p> 
+
+        <h2 id="connexion-rapsberry-pi">Connexion au raspberry pi</h2> 
+
+        <p>
+                Ouvrir un invite de commande (cmd) sur un ordinateur connecté au même réseau que le Raspberry Pi : win + r -> *cmd* -> entrée <br>
+
+                Connexion au rapsberry pi : <br>
+
+                        <code>ssh NOMUTILISATEUR@NOMRASPBERRY -> MOTDEPASSE</code> <br>
+
+                Il faut ensuite télécharger le conteneur dans lequel se trouve home assistant déjà paramétré : <br>
+
+                        <code>git clone https://gitlab.ec-lyon.fr/durandu/temperatures-monitoring.git</code> <br>
+
+                Il est ensuite nécessaire de construire le conteneur : <br>
+
+                        <code>cd temperatures-monitoring <br>
+                        docker build -t AJOUTERLENOM</code> <br>
+
+                Il est ensuite possible de lancer le docker : <br>
+                        
+                        <code>sudo docker compose up -d</code> <br>
+
+                Attention, il faut se placer dans le dossier pour pouvoir lancer le conteneur, si ce n'est pas le cas, entrer : <br>
+
+                        <code>cd temperatures-monitoring</code>
+        </p> 
+
+        <h2 id="connexion-home-assistant">Connexion à home assistant</h2> 
+
+        <p>
+                Pour se connecter à home assistant, il faut tout d'abord récupérer l'ip du Raspberry Pi : <br>
+
+                        <code>hostname -I</code> <br>
+
+                Il est ensuite possible de se connecter à homeassistant en entrant le lien suivant dans un navigateur : <br>
+
+                        <code>ADRESSEIP:8123</code>
+        </p>
+
+        <h2 id="connexion-nouveau-reseau">Connexion à un nouveau réseau</h2>
+
+        <p>
+                Lister les réseaux disponibles : <br>
+
+                        <code>nmcli device wifi list</code> <br>
+
+                Ajouter la connexion à un réseau : <br>
+                        
+                        <code>sudo nmcli device wifi connect "NOM DU RESEAU" password "MOT DE PASSE"</code>
+        </p> 
+
+        <h2 id="connexion-capteur-1wire">Connexion d'un capteur 1wire</h2>
+
+        <p>
+                Branchement sur le raspberry pi : <br>
+
+                <img src="https://www.micropython.fr/modules_center/seriel_1_wire/ds18b20/img_008.png" alt=""> <br>
+
+                <img src="https://tanzolab.tanzilli.com/public/openhab_onewire/1wire_raspi.png" alt="">
+        </p>
+
+
+
+        <h2 id="ajout-1wire-home-assistant">Ajout d'un capteurs 1Wire à home assistant</h2>
+
+        <h3 id="ajout-capteur-home-assistant">Ajout de capteur dans home assistant</h3>
+
+        <p>
+                Aller dans Paramètres -> Appareils et services -> 1Wire <br>
+
+                Cliquer sur Ajouter un pont -> remplacer *localhost* par l'adresse IP du raspberry pi et choisir le port 4304 puis valider. <br>
+
+                Si l'ajout ne se fait par correctement, suivre les étapes suivantes.
+        </p>
+
+        <h3 id="verification-bonne-connexion-capteur">Vérification de la bonne connexion des capteurs 1Wire</h3>
+
+        <p>
+                Pour vérifier que le protocole 1Wire est bien activé : <br>
+
+                        <code>lsmod | grep w1</code> <br>
+
+                Si rien ne s'affiche, ouvrir le fichier de configuration en entrant la commande : <br>
+
+                        <code>sudo nano /boot/config.txt <br>
+
+                Ajouter la ligne suivante :</code> <br>
+
+                        <code>dtoverlay=w1-gpio</code> <br>
+
+                Enregistrer le fichier puis redémarrer le Raspberry Pi : <br>
+
+                        <code>sudo reboot</code> <br>
+
+                Pour lister les capteurs connectés : <br>
+
+                        <code>cd /sys/bus/w1/devices/ <br>
+                        ls</code>
+        </p> 
+
+        <h3 id="verification-installation-owserver">Vérification de la bonne installation de OWServer</h3>
+
+        <p>
+                Enter dans le cmd : <br>
+
+                        sudo apt-get update <br>
+                        sudo apt-get install owserver <br>
+
+                Ouvrir le fichier de configuration de OWServer : <br>
+
+                        sudo nano /etc/owfs.conf <br>
+
+                Ajouter tout en bas la commande : <br>
+
+                        address = 0.0.0.0 <br>
+
+                Relancer OWServer : <br>
+
+                        sudo systemctl restart owserver
+        </p> 
+
+        <h2 id="ajout-capteur-carte">Ajout d'un capteur à la carte</h2>
+
+        <p>
+                Pour associer un capteur à un champ de température de la carte, il suffit d'ajouter le code suivant dans la partie *rules*, en modifiant le nom du capteur et de l'id de salle associé. <br>
+
+                - name: Temperature Salle XXXX
+                                entities:
+                                - sensor.NOMDUCAPTEUR
+                                element: NOMDEL'ELEMENT
+                                state_action:
+                                - service: floorplan.text_set
+                                service_data: >-
+                                        ${(entity.state !== undefined) ? Math.round(entity.state *
+                                        10) / 10 + "°C" : "??°C"}
+                                - service: floorplan.class_set
+                                service_data:
+                                        class: static-temp
+
+                Il faut également ajouter le capteur dans la liste des *entities*. <br>
+        </p> 
+
+        <h2 id="ajout-carte-raspberry-pi">Ajout d'une nouvelle carte sur le rapsberry pi</h2>
+
+        <p>
+                Pour envoyer un fichier sur le raspberry pi, entrer la commande :
+
+                        scp "CHEMINDUFICHIER" lesframboises@IPDURASPBERRY:/home/lesframboises/
+
+                Ensuite, ajouter la carte dans le bon dossier :
+
+                        ssh lesframboises@LesFramboises
+                        sudo mv ~/NOMDUFICHIER /home/lesframboises/temperatures-monitoring/config/www/floorplan/
+        </p> 
+
+                
+    </div>
+
+    
+    <footer class="footer">
+        <div class="imagebandeau"><img src="images/Logo_Centrale_Lyon_Rouge.png" alt=""></div>
+        <div class="cours"><div class="textefooter">Projet réalisé dans le cadre du cours</div><div class="textefooter">MSO_INFO_3_8 Projet Informatique</div></div>
+        <div class="eleves">
+            <div class="textefooter">Projet réalisé par</div>
+            <div class="textefooter">Patricio José SILVA</div>
+            <div class="textefooter">Mathieu LONDICHE</div>
+            <div class="textefooter">Ulysse DURAND</div>
+            <div class="textefooter">Louis ROBBE GODARD</div>
+        </div>
+        <div class="tuteur">
+            <div class="textefooter">Projet encadré par</div>
+            <div class="textefooter">Olivier DESSOMBZ</div></div>
+    </footer>
+
+    <script src="..\config.js"></script>
+</BODY>
+</HTML>

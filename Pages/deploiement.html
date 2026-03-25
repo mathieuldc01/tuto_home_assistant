@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../config.css">
+<title>Home Assistant Deployment</title>
+</head>
+
+<body>
+
+<div class="bandeau">
+    <div class="imagebandeau"><img src="../images/Logo_Centrale_Lyon_Rouge.png" alt=""></div>
+    <a class="bouton" href="../site_tuto.html">Accueil</a> 
+    <a class="bouton" href="requirements.html">Requirement</a>
+    <a class="bouton" href="deploiement.html">Home Assistant</a>
+    <a class="bouton" href="raspberry.html">Raspberry Pi</a>
+    <a class="bouton" href="capteurs.html">Capteur</a>
+    <a class="bouton" href="plans.html">Plan</a>
+</div>
+
+<hr>
+
+<div class="content">
+
+<ul class="menu">
+
+    <li>
+        <h2>Cloner le repository</h2>
+
+        <p>Clone le projet avec la commande suivante :</p>
+
+        <div class="command">
+            git clone --depth=1 https://gitlab.ec-lyon.fr/durandu/temperatures-monitoring.git
+        </div>
+
+        <p>Puis entre dans le dossier :</p>
+
+        <div class="command">
+            cd temperatures-monitoring
+        </div>
+    </li>
+
+    <li>
+        <h2>Lancer Home Assistant</h2>
+
+        <p>Démarre les services :</p>
+
+        <div class="command">
+            docker compose up -d
+        </div>
+
+        <p>Accède à l’interface (depuis un navigateur):</p>
+
+        <div class="command">
+            http://localhost:8123
+        </div>
+
+        <p>Puis suis les instructions pour configurer ton Smart Home.</p>
+    </li>
+
+    <li>
+        <h2>Configurer le dashboard</h2>
+
+        <p>(Uniquement si nouveaux capteurs)</p>
+
+        <p>Dans Home Assistant :</p>
+        <ul>
+            <li>Aller dans le dashboard <b>W1bis</b></li>
+            <li>Cliquer sur <b>Edit</b> (icône crayon)</li>
+            <li>Puis <b>"..." → Raw configuration editor</b></li>
+        </ul>
+
+        <p>Copier le contenu du fichier :</p>
+        <div class="command">
+            make_config/plan.yaml
+        </div>
+         <p>Tu peux copier directement cette configuration :</p>
+
+     <button onclick="copyPlan()" class="bouton">📋 Copier la configuration</button>
+     <div class="command">
+        <pre id="planYaml">
+        title: Floormap views
+        views:
+        - type: custom:floorplan-card
+            full_height: true
+            config:
+            console_log_level: info
+            log_level: info
+
+            defaults:
+                hover_action: hover-info
+                tap_action: more-info
+
+            image: /local/floorplan/w1bis/plan.svg
+
+            rules:
+                - elements: [background_111]
+                entity: input_number.test1
+                tap_action:
+                    action: more-info
+                    entity: input_number.test1
+        </pre>
+    </div>
+        </li>
+
+        <p>Puis sauvegarder.</p>
+    </li>
+
+    <li>
+        <h2>Configurer les capteurs</h2>
+
+        <p>Édite le fichier suivant :</p>
+
+        <div class="command">
+            make_config/sensor_svg_corresp.yaml
+        </div>
+
+        <p>Format :</p>
+
+        <div class="command">
+- sensor_id:
+  txt_elem: id_texte_svg
+  bg_elem: id_background_svg
+        </div>
+
+        <p>Génère ensuite la configuration :</p>
+
+        <div class="command">
+            python make_config
+        </div>
+
+        <p>Le fichier généré :</p>
+
+        <div class="command">
+            make_config/plan.yaml
+        </div>
+
+        <p>Copie ce contenu dans le Raw configuration editor du dashboard.</p>
+    </li>
+
+</ul>
+
+</div>
+
+<footer class="footer">
+    <div class="imagebandeau"><img src="../images/Logo_Centrale_Lyon_Rouge.png" alt=""></div>
+    <div class="cours">
+        <div class="textefooter">Projet réalisé dans le cadre du cours</div>
+        <div class="textefooter">MSO_INFO_3_8 Projet Informatique</div>
+    </div>
+    <div class="eleves">
+        <div class="textefooter">Projet réalisé par</div>
+        <div class="textefooter">Patricio José SILVA</div>
+        <div class="textefooter">Mathieu LONDICHE</div>
+        <div class="textefooter">Ulysse DURAND</div>
+        <div class="textefooter">Louis ROBBE GODARD

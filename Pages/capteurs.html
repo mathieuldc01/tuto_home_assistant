@@ -180,6 +180,9 @@ Flash en 3 étapes :
 
 <div id="debug_section" class="section-content hidden">
 
+<p>Le fichier debug.yaml sert à afficher les adresses des capteurs lorsque l'on en branche plusieurs sur un esp32.
+    Choisissez les différents GPIO auxquelles sont connecté les capteurs pour les exposer</p>
+
 <div class="container">
 
 <label>Nom</label>
@@ -197,8 +200,11 @@ Flash en 3 étapes :
 <label>Password</label>
 <input id="debug_password">
 
+
 <h3>GPIO</h3>
 <div id="gpio"></div>
+
+
 
 <button type="button" onclick="add_gpio('gpio')">➕ Ajouter GPIO</button>
 
@@ -207,10 +213,7 @@ Flash en 3 étapes :
 <button type="button" onclick="generateDebug()">Télécharger debug.yaml</button>
 
 </div>
-<p>Le fichier debug.yaml sert à afficher les adresses des capteurs lorsque l'on en branche plusieurs sur un esp32. Pour lancer le fichier entrez la commande suivante :</p>
-    <div class="command">
-        esphome run debug.yaml
-    </div>
+    
 
 </div>
 
@@ -269,7 +272,7 @@ Flash en 3 étapes :
 </li>
 
 <div id="config_section" class="section-content hidden">
-
+<p>Maintenant que vous avez récupéré les adresses des capteur, on peux maintenant configurer complètement notre ESP32 </p>
 <div class="container">
 
 <label>Nom</label>
@@ -307,7 +310,7 @@ Flash en 3 étapes :
     <div id="esp32_to_ha">
 
         <p>
-        Il est nécessaire de flasher votre ESP32 avant de pouvoir l’ajouter à Home Assistant.
+        Il est nécessaire d'avoir flasher votre ESP32 avant de pouvoir l’ajouter à Home Assistant.
         </p>
 
         <h4>Étape 1 : Préparer Home Assistant</h4>
@@ -335,9 +338,24 @@ Flash en 3 étapes :
         <div style="flex: 1; text-align: center;">
             <img src="../images/log_2.jpeg" alt="1_wire" 
                 style="max-width: 60%; height: auto; object-fit: contain;">
-            <p>Recherche de l'IP dans les logs</p>
+            <p>Recherche de l'IP de l'ESP32 dans les logs</p>
         </div>
         </div>
+
+<h4>Étape 3 : Vérification</h4>
+
+<p>
+    Une fois l’adresse IP trouvée, vérifiez que le capteur apparaît bien dans le tableau de bord.
+</p>
+
+<div style="display: flex; gap: 20px; align-items: flex-start;">
+    <div style="flex: 1; text-align: center;">
+        <img src="../images/esphome_final.jpeg" alt="dashboard_esp32"
+             style="max-width: 40%; height: auto; object-fit: contain;">
+        <p>Tableau de bord de l’ESP32 une fois ajouté (avec deux capteurs)</p>
+    </div>
+</div>
+
     </div>
     </li>
 </ul>

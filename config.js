@@ -151,9 +151,9 @@ function generateDebug() {
 
     let oneWire = "";
     pins.forEach(pin => {
-        oneWire += `
-            - platform: gpio
-              pin: ${pin}`;
+        oneWire += `- platform: gpio
+    pin: ${pin}
+  `;
     });
 
 
@@ -164,24 +164,24 @@ function generateDebug() {
 
 esp32:
   board: ${board}
-
-logger:
-  level : DEBUG
   framework:
     type: esp-idf   # or "arduino" if you prefer
 
 
+logger:
+  level : DEBUG
+
 api:
 
 ota:
-    platform : esphome
+  platform : esphome
 
 wifi:
   ssid: "${ssid}"
   password: "${password}"
 
 one_wire:
-${oneWire}
+  ${oneWire}
 
 
 `;
@@ -211,9 +211,9 @@ function generateConfig() {
 
     let oneWire = "";
     pins.forEach(pin => {
-        oneWire += `
-            - platform: gpio
-              pin: ${pin}`;
+        oneWire += `- platform: gpio
+    pin: ${pin}
+  `;
     });
 
     let generate=true;
@@ -239,11 +239,11 @@ function generateConfig() {
         const address = sensor.querySelector(".address").value;
 
         
-        sensorsYaml += `
-  - platform: dallas_temp
+        sensorsYaml += `- platform: dallas_temp
     name: "${sensorName}"
     address: ${address}
-    update_interval: 30s`;
+    update_interval: 30s
+  `;
     });
 
     const yaml = `esphome:
@@ -254,24 +254,23 @@ esp32:
   framework:
     type: esp-idf   # or "arduino" if you prefer
 
-
 logger:
   level : DEBUG
 
 api:
 
 ota:
-    platform : esphome
+  platform : esphome
 
 wifi:
   ssid: "${ssid}"
   password: "${password}"
 
 one_wire:
-${oneWire}
+  ${oneWire}
 
 sensor:
-${sensorsYaml}
+  ${sensorsYaml}
 `;
 
     downloadYaml(yaml, "config.yaml");

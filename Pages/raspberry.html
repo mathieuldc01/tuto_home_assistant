@@ -98,8 +98,38 @@ sudo nmcli device wifi connect "NOM_DU_RESEAU" password "MOT_DE_PASSE"
 
                 </div>
 </li>
+<li><h2>Installation de Git</h2>
+    <div id="git_instal" class="section">
+        <p>
+            Pour cloner le dépôt sur le Raspberry Pi, il faut installer Git :
+        </p>
 
+        <div class="command">
+            sudo apt update <br>
+            sudo apt install git -y <br>
+            git --version
+        </div>
+    </div>
 </li>
+<li><h2>Installation de Docker</h2>
+    <div id="docker_instal" class="section">
+        <p>
+            Home Assistant a besoin d'un conteneur (Docker). L'installation sur Raspberry Pi est différente de Windows. Voici les commandes :
+        </p>
+
+        <div class="command">
+            curl -fsSL https://get.docker.com -o get-docker.sh <br>
+            sudo sh get-docker.sh <br>
+            sudo usermod -aG docker $USER <br>
+            newgrp docker <br>
+            docker --version
+        </div>
+    </div>
+</li>
+
+<hr>
+
+<h3>Votre Rasberry Pi est prêt à recevoir Home Assistant</h3>
 
     <footer class="footer">
         <div class="imagebandeau" href=""><img src="../images/Logo_Centrale_Lyon_Rouge.png" alt=""></div>

@@ -92,7 +92,7 @@ function addSensor() {
         <input class="sensorname" value="temperature_${sensorCount}">
 
         <label>GPIO</label>
-         <select class="gpio">
+         <select class="gpio_sensor">
             <option>GPIO0</option>
             <option>GPIO1</option>
             <option>GPIO2</option>
@@ -208,6 +208,7 @@ function generateConfig() {
         pins.add(gpio.value);
     });
 
+
     let oneWire = "";
     pins.forEach(pin => {
         oneWire += `
@@ -215,7 +216,19 @@ function generateConfig() {
               pin: ${pin}`;
     });
 
+    let generate=true;
 
+    document.querySelectorAll("#sensors .sensor-block").forEach(sensor => {
+    const address = sensor.querySelector(".address").value;
+
+    if (!address && generate){
+        generate=false;
+         alert("Remplir une adresse pour chaque capteur (pour connaître l'adresse à remplir, utilisé le fichier debug)");
+     return;
+    }
+        
+    });
+    if (generate==false) return;
 
 
     let sensorsYaml = "";
@@ -224,9 +237,6 @@ function generateConfig() {
 
         const sensorName = sensor.querySelector(".sensorname").value;
         const address = sensor.querySelector(".address").value;
-        const gpio = sensor.querySelector(".address").value;
-
-    if (!address) return;
 
         
         sensorsYaml += `

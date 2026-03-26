@@ -29,12 +29,11 @@
 <ul class="menu">
 
     <!-- RENDU FINAL -->
-    <li>
-        <h2>Rendu final</h2>
+    <li><h2>Résultat Attendu</h2>
         <div style="text-align:center;">
-            <img src="../images/floorplan_example.png" alt="Schéma floorplan"
-                 style="max-width: 60%; height: auto;">
-            <p>Plan interactif montrant les températures actuelles d’un étage</p>
+            <img src="../images/plan_inkscape.png" alt="Schéma floorplan"
+                    style="max-width: 70%; height: auto;">
+            <p>Structure du plan (Les couches inférieur doivent être créer en première)</p>
         </div>
     </li>
 
@@ -71,7 +70,7 @@
 
             <div style="text-align:center;">
                 <img src="../images/schema_floorplan.png" alt="Exemple floorplan"
-                     style="max-width: 70%; height: auto;">
+                     style="max-width: 60%; height: auto;">
                 <p>Structure du plan (Les couches inférieur doivent être créer en première)</p>
             </div>
 
@@ -95,13 +94,17 @@
                 ⚠️ Attention : bien définir les <strong>ID</strong> et pas seulement les <strong>tags</strong>.
             </div>
 
-            <div style="text-align:center;">
-                <img src="../images/example id.jpeg" alt="Schéma floorplan"
-                     style="max-width: 70%; height: auto;">
+                   <div style="display: flex; gap: 20px; align-items: flex-start;">
+        <div style="flex: 1; text-align: center;">
+            <img src="../images/example id.jpeg" alt="Schéma floorplan"
+                     style="max-width: 60%; height: auto;">
                 <p>Exemple d’identification</p>
-            </div>
+        </div>
+
+        <hr>
 
         </div>
+
     </li>
 
     <!-- HOME ASSISTANT -->
@@ -113,61 +116,37 @@
             <li><strong>1.</strong> Préparer ton fichier SVG (avec IDs)</li>
 
             <li><strong>2.</strong> Uploader dans :
-                <code>/config/www/NomDuBatiment/floorplan.svg</code>
+                <code>/config/www/floorplan/NomDuBatiment</code>
             </li>
 
-            <li><strong>3.</strong> Accès via :
-                <code>/local/NomDuBatiment/floorplan.svg</code>
+            <li><strong>3.</strong> Vérifier que le fichier plan.yaml est dans le dossier
+                <code>/config/www/floorplan/NomDuBatiment</code>
             </li>
 
-            <li><strong>4.</strong> ⚠️ Ne PAS utiliser la carte Image</li>
-
-            <li><strong>5.</strong> Utiliser une carte custom :
-                <code>canvas-animated-card</code> ou <code>floorplan-card</code>
-            </li>
+            
         </ul>
 
-        <p><strong>Exemple avec canvas-animated-card :</strong></p>
-
-        <pre><code>
-                type: custom:canvas-animated-card
-                image: /local/NomDuBatiment/floorplan.svg
-        </code></pre>
-
-        <div class="warning">
-            ⚠️ La carte Image classique ne permet pas d’exploiter les IDs du SVG.
-            Pour un floorplan interactif, il faut utiliser une carte personnalisée.
-        </div>
-
-        <div style="text-align:center;">
-            <img src="../images/en_cours.jpg" alt="Rendu Home Assistant"
-                 style="max-width: 70%; height: auto;">
-            <p>Rendu dans Home Assistant</p>
-        </div>
 
     </div>
 </li>
 
-    <!-- CANVAS CARD -->
-    <li>
-        <h2>Installation de canvas-animated-card</h2>
-        <div id="canvas" class="section">
+<li>
+     <h2>Résultat final dans Home Assistant</h2>
+     <p>
+         Une fois les capteurs connectés, les salles se coloreront automatiquement et les températures apparaîtront. 
+     </p>
+        <div id="Résultat" class="section">
 
-            <ul>
-                <li>Créer le dossier : <code>/config/www</code></li>
-                <li>Ajouter le fichier : <code>/config/www/canvas-animated-card.js</code></li>
-                <li>Ajouter la ressource : <code>/local/canvas-animated-card.js</code> (type : JavaScript Module)</li>
-                <li>Créer un dashboard dans Home Assistant</li>
-                <li>Ajouter une carte → Manual</li>
-                <li>Coller ce code YAML :</li>
-            </ul>
-
-            <pre><code>
-            type: "custom:canvas-animated-card"
-            </code></pre>
-
+        <div style="display: flex; gap: 20px; align-items: flex-start;">
+        <div style="flex: 1; text-align: center;">
+            <img src="../images/plan_inkscape.png" alt="Suivi temporel" 
+                style="max-width: 80%; height: auto; object-fit: contain;">
+            <p>Plan complet</p>
         </div>
-    </li>
+        </div>
+    </div>
+
+</li>
 
 </ul>
 

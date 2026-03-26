@@ -78,7 +78,7 @@ Dans cette section, les deux approches seront abordées. À noter qu’il existe
 
   <p><strong>Intérêt de OWServer :</strong></p>
   <p>
-    OWServer (faisant partie de :contentReference[oaicite:1]{index=1}) permet de centraliser l'accès aux capteurs One-Wire.
+    OWServer permet de centraliser l'accès aux capteurs One-Wire.
     Il agit comme un serveur qui expose les capteurs (température, humidité, etc.) via le réseau ou en local.
     Cela permet à plusieurs applications ou machines d'accéder aux capteurs sans connexion directe au bus 1-Wire.
   </p>
@@ -99,10 +99,10 @@ Dans cette section, les deux approches seront abordées. À noter qu’il existe
     <p>Ajouter ou modifier les lignes suivantes :</p>
 
     <div class="command">
-      !server : server: localhost:4304<br>
-      server: w1<br>
+      <s>server: FAKE = DS18S20,DS2405</s> -> server: w1<br>
+      ###################### OWSERVER ######################<br>
       server: port = localhost:4304<br>
-      server: address = 0.0.0.0
+      server: adress = 0.0.0.0
     </div>
 
     <p>Redémarrer le serveur :</p>
@@ -115,6 +115,20 @@ Dans cette section, les deux approches seront abordées. À noter qu’il existe
       sudo systemctl status owserver
     </div>
 
+    <p>
+        Modifier ensuite le fichier de configuration :
+        </p>
+
+        <div class="command">
+sudo nano /boot/firmware/config.txt
+        </div>
+
+        <p>Ajouter la ligne suivante à la fin du fichier :</p>
+
+        <div class="command">
+dtoverlay=w1-gpio
+        </div>
+
     <p>Lister les capteurs détectés :</p>
     <div class="command">
       ls /sys/bus/w1/devices/
@@ -122,45 +136,7 @@ Dans cette section, les deux approches seront abordées. À noter qu’il existe
 
   </div>
 </li>
-    <li><h2>Activation et vérification du protocole 1-Wire sur Raspberry Pi</h2>
-
-    <div id="Capteur_to_Pi">
-
-        <p><strong>Vérifier que le module est actif :</strong></p>
-
-        <div class="command">
-lsmod | grep w1
-        </div>
-
-        <p>
-        Si rien ne s’affiche, modifier le fichier de configuration :
-        </p>
-
-        <div class="command">
-sudo nano /boot/firmaware/config.txt
-        </div>
-
-        <p>Ajouter la ligne suivante :</p>
-
-        <div class="command">
-dtoverlay=w1-gpio
-        </div>
-
-        <p>Redémarrer le Raspberry Pi :</p>
-
-        <div class="command">
-sudo reboot
-        </div>
-
-        <p>Lister les capteurs détectés :</p>
-
-        <div class="command">
-cd /sys/bus/w1/devices/
-ls
-        </div>
-
-    </div>
-    </li>
+    
     <li><h2>Ajout d'un capteur 1-Wire sur Raspberry Pi dans Home Assistant</h2>
 
     <div id="Capteur_to_Pi_ha">
@@ -231,6 +207,11 @@ Flash en 3 étapes :
 <button type="button" onclick="generateDebug()">Télécharger debug.yaml</button>
 
 </div>
+<p>Le fichier debug.yaml sert à afficher les adresses des capteurs lorsque l'on en branche plusieurs sur un esp32. Pour lancer le fichier entrez la commande suivante :</p>
+    <div class="command">
+        esphome run debug.yaml
+    </div>
+
 </div>
 
 <!-- FLASH -->
@@ -357,28 +338,10 @@ Flash en 3 étapes :
             <p>Recherche de l'IP dans les logs</p>
         </div>
         </div>
-
-        <h4>Étape 3 : Vérification</h4>
-
-        <p>
-        Vérifiez que les entités apparaissent correctement dans le tableau de bord.
-        </p>
-
-        <div style="display: flex; gap: 20px; align-items: flex-start;">
-        <div style="flex: 1; text-align: center;">
-            <img src="../images/en_cours.jpg" alt="1_wire" 
-                style="max-width: 60%; height: auto; object-fit: contain;">
-            <p>ESP32 Intégréer à Home Assistant</p>
-
-        <div class="command">
-api:
-        </div>
-
     </div>
     </li>
 </ul>
 </div>
-
     <footer class="footer">
         <div class="imagebandeau" href=""><img src="../images/Logo_Centrale_Lyon_Rouge.png" alt=""></div>
         <div class="cours"><div class="textefooter">Projet réalisé dans le cadre du cours</div><div class="textefooter">MSO_INFO_3_8 Projet Informatique</div></div>

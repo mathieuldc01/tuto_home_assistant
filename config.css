@@ -4,6 +4,49 @@
     --noir-texte: #252525;
 }
 
+.bandeau {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+.imagebandeau img {
+    height: 50px;
+}
+
+.bouton {
+    text-decoration: none;
+    margin: 0 10px;
+    color: black;
+    font-weight: bold;
+}
+
+/* Permet d’adapter sur petits écrans */
+@media (max-width: 768px) {
+    .bandeau {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .bouton {
+        margin: 5px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 html {
   height: 100%;
 }
